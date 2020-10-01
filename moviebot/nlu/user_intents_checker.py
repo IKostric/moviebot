@@ -16,6 +16,7 @@ from moviebot.dialogue_manager.operator import Operator
 from moviebot.intents.user_intents import UserIntents
 from moviebot.nlu.data_loader import DataLoader
 from moviebot.nlu.rule_based_annotator import RBAnnotator
+from moviebot.nlu.neural_annotator import NeuralAnnotator
 from moviebot.dialogue_manager.slots import Slots
 from moviebot.dialogue_manager.values import Values
 
@@ -49,10 +50,25 @@ class UserIntentsChecker:
             'user_reveal_inquire']
         # Load the components for intent detection
         self._intent_patterns()
-        self.slot_annotator = RBAnnotator(self._process_utterance,
-                                          self._lemmatize_value,
-                                          self.slot_values)
+        self.slot_annotator = self.get_annotator(config['annotator'])
+
+        # TODO(Ivica Kostric): Is this necessary?
         self._lemmatize_value('temp')
+
+    def get_annotator(self, name=None):
+        annotators = {
+            'NeuralAnnotator': NeuralAnnotator,
+            'RBAnnotator': RBAnnotator,
+        }
+
+        annotator = annotators[name] if name and (
+            name in annotators) else RBAnnotator
+
+        return annotator(
+            self._process_utterance,
+            self._lemmatize_value,
+            self.slot_values,
+        )
 
     def _punctuation_remover(self, remove_ques=True):
         """Defines a patterns of punctuation marks to remove/keep in the

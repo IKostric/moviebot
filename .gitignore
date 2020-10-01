@@ -4,5 +4,7 @@ doc/build/*
 conversation_history/*
 data/slot_values.json
 
+third_party/REL/data
+
 # IDE config
 .vscode

@@ -12,6 +12,7 @@ DATA:
 
 NLU:
   tag_words_slots: config/tag_words_slots.json
+  slot_annotator: NeuralAnnotator
 
 BOT: True # execute the code on Telegram
 

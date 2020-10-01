@@ -71,7 +71,7 @@ class Agent:
         self.nlu = None
         self.nlg = None
         self.isBot = False
-        self.new_user = False    # a parameter for Bot
+        self.new_user = False  # a parameter for Bot
         self.bot_recorder = None
 
         # Dialogue component agent controls
@@ -107,10 +107,14 @@ class Agent:
                 'Conversational Agent: No tag words provided for slots in user utterance'
             )
 
-        data_config = dict(ontology=self.ontology,
-                           database=self.database,
-                           slot_values_path=self.slot_values_path,
-                           tag_words_slots_path=nlu_tag_words_slots_path)
+        # TODO(Ivica Kostric): validate 'slot_annotator' in config['NLU']
+        data_config = dict(
+            ontology=self.ontology,
+            database=self.database,
+            slot_values_path=self.slot_values_path,
+            tag_words_slots_path=nlu_tag_words_slots_path,
+            annotator=self.config['NLU']['slot_annotator'],
+        )
         self.nlu = NLU(data_config)
         self.nlg = NLG(dict(ontology=self.ontology))
         data_config['slots'] = list(self.nlu.intents_checker.slot_values.keys())
