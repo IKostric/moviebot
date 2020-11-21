@@ -2,9 +2,11 @@
 __pycache__/
 doc/build/*
 conversation_history/*
-data/slot_values.json
 
+# data files
+data/slot_values.json
 third_party/REL/data
+eval/data
 
 # IDE config
 .vscode
