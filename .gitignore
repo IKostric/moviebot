@@ -10,3 +10,6 @@ eval/data
 
 # IDE config
 .vscode
+
+# evaluation data
+eval/data/extras/*
