@@ -63,8 +63,7 @@ class UserIntentsChecker:
             'RBAnnotator': RBAnnotator,
         }
 
-        annotator = annotators[name] if name and (
-            name in annotators) else RBAnnotator
+        annotator = annotators.get(name, RBAnnotator)
 
         return annotator(
             self._process_utterance,
