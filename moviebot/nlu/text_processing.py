@@ -151,7 +151,7 @@ class Tokenizer:
             start = text.index(word, end)
             end = start + len(word)
             lemma = self.lemmatize_text(word)
-            is_stopword = word in self._stop_words
+            is_stopword = lemma in self._stop_words
 
             tokens.append(Token(word, start, end, lemma, is_stopword))
         return tokens
