@@ -9,4 +9,4 @@ before_install:
 install:
   - pip install coverage
   - pip install pytest-cov
-script: pytest --cov=moviebot/nlu --cov-report
+script: pytest --cov=moviebot/nlu
