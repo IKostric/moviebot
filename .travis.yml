@@ -4,9 +4,13 @@ python:
 before_install:
   - python --version
   - pip install -U pip
+install:
   - pip install -r requirements.txt
   - pip install -U pytest
-install:
   - pip install coverage
   - pip install pytest-cov
+after_install:
+  - python -c "import nltk; nltk.download('punkt')"
+  - python -c "import nltk; nltk.download('wordnet')"
+  - python -c "import nltk; nltk.download('stopwords')"
 script: pytest --cov=moviebot/nlu
