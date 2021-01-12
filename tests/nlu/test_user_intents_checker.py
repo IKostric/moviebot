@@ -1,4 +1,5 @@
 from moviebot.nlu.user_intents_checker import UserIntentsChecker
+from moviebot.utterance.utterance import UserUtterance
 from tests.mocks.mock_data_loader import MockDataLoader
 
 from unittest.mock import patch
@@ -13,18 +14,17 @@ config = {
 }
 
 
-@pytest.mark.parametrize('utterance', [
-    ('hello'),
-    ('hi do you know of any interesting movies'),
-    ('hey hey'),
-])
+@pytest.mark.parametrize('utterance',
+                         [('Hello.'),
+                          ('Hi, do you know of any interesting movies?')])
 @patch('moviebot.nlu.user_intents_checker.DataLoader', new=MockDataLoader)
 def test_check_hi_intent(utterance):
     # Setup
     uic = UserIntentsChecker(config)
 
     # Exercise
-    result = uic.check_hi_intent(utterance)
+    uu = UserUtterance({'text': utterance})
+    result = uic.check_hi_intent(uu)
 
     # Results
     assert len(result) == 1
@@ -33,19 +33,16 @@ def test_check_hi_intent(utterance):
     # Cleanup - none
 
 
-@pytest.mark.parametrize('utterance', [
-    (''),
-    ('i would like to watch an action movie'),
-    ('im interested in something like othello'),
-    ('im interested in something like hi cousin'),
-])
+@pytest.mark.parametrize('utterance',
+                         [(''), ('I would like to watch an action movie.')])
 @patch('moviebot.nlu.user_intents_checker.DataLoader', new=MockDataLoader)
 def test_check_hi_intent_empty(utterance):
     # Setup
     uic = UserIntentsChecker(config)
 
     # Exercise
-    result = uic.check_hi_intent(utterance)
+    uu = UserUtterance({'text': utterance})
+    result = uic.check_hi_intent(uu)
 
     # Results
     assert len(result) == 0
@@ -54,9 +51,9 @@ def test_check_hi_intent_empty(utterance):
 
 
 @pytest.mark.parametrize('utterance', [
-    ('im happy with my result bye'),
+    ('I\'m happy with my result, bye'),
     ('exit'),
-    ('i quit'),
+    ('I quit'),
 ])
 @patch('moviebot.nlu.user_intents_checker.DataLoader', new=MockDataLoader)
 def test_check_bye_intent(utterance):
@@ -64,7 +61,8 @@ def test_check_bye_intent(utterance):
     uic = UserIntentsChecker(config)
 
     # Exercise
-    result = uic.check_bye_intent(utterance)
+    uu = UserUtterance({'text': utterance})
+    result = uic.check_bye_intent(uu)
 
     # Results
     assert len(result) == 1
@@ -73,19 +71,17 @@ def test_check_bye_intent(utterance):
     # Cleanup - none
 
 
-@pytest.mark.parametrize('utterance', [
-    (''),
-    ('hi'),
-    ('i would like to watch an action movie'),
-    ('im interested in something like bye bye birdie'),
-])
+@pytest.mark.parametrize('utterance',
+                         [(''), ('Hi.'),
+                          ('I would like to watch an action movie.')])
 @patch('moviebot.nlu.user_intents_checker.DataLoader', new=MockDataLoader)
 def test_check_bye_intent_empty(utterance):
     # Setup
     uic = UserIntentsChecker(config)
 
     # Exercise
-    result = uic.check_bye_intent(utterance)
+    uu = UserUtterance({'text': utterance})
+    result = uic.check_bye_intent(uu)
 
     # Results
     assert len(result) == 0

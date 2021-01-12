@@ -207,7 +207,7 @@ class UserIntentsChecker:
         user_dacts = []
         dact = DialogueAct(UserIntents.UNK, [])
         for token in utterance.get_tokens():
-            for pattern in self.acknowledge_pattern:
+            for pattern in self.basic_patterns[UserIntents.ACKNOWLEDGE]:
                 match = re.search(r'\b{0}\b'.format(pattern), token.lemma)
                 if match:
                     dact.intent = UserIntents.ACKNOWLEDGE
@@ -228,7 +228,7 @@ class UserIntentsChecker:
         user_dacts = []
         dact = DialogueAct(UserIntents.UNK, [])
         for token in utterance.get_tokens():
-            for pattern in self.deny_pattern:
+            for pattern in self.basic_patterns[UserIntents.DENY]:
                 match = re.search(r'\b{0}\b'.format(pattern), token.lemma)
                 if match:
                     dact.intent = UserIntents.DENY
@@ -252,7 +252,7 @@ class UserIntentsChecker:
         for token in utterance.get_tokens():
             if any([
                     re.search(r'\b{0}\b'.format(pattern), token.lemma)
-                    for pattern in self.bye_pattern
+                    for pattern in self.basic_patterns[UserIntents.BYE]
             ]):
                 dact.intent = UserIntents.BYE
         if dact.intent != UserIntents.UNK:
@@ -275,7 +275,7 @@ class UserIntentsChecker:
         for token in utterance.get_tokens():
             if any([
                     re.search(r'\b{0}\b'.format(pattern), token.lemma)
-                    for pattern in self.hi_pattern
+                    for pattern in self.basic_patterns[UserIntents.HI]
             ]):
                 dact.intent = UserIntents.HI
         if dact.intent != UserIntents.UNK:
