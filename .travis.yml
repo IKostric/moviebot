@@ -9,8 +9,8 @@ install:
   - pip install -U pytest
   - pip install coverage
   - pip install pytest-cov
-after_install:
+script: 
   - python -c "import nltk; nltk.download('punkt')"
   - python -c "import nltk; nltk.download('wordnet')"
   - python -c "import nltk; nltk.download('stopwords')"
-script: pytest --cov=moviebot/nlu
+  - pytest --cov=moviebot/nlu
