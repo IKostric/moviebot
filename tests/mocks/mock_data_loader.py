@@ -18,7 +18,7 @@ class MockDataLoader:
     def load_database(self):
         return slot_values
 
-    def load_tag_words(self, a=None):
+    def load_tag_words(self, *args):
         return tag_words
 
     def test_method(self):
